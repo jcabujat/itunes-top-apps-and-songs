@@ -52,6 +52,7 @@ public class FeedEntry {
     @NonNull
     @Override
     public String toString() {
-        return "Name = " + name + " , Artist = " + artist;
+        return "Name = " + name + " , Artist = " + artist +
+                "\n Summary : " + summary;
     }
 }

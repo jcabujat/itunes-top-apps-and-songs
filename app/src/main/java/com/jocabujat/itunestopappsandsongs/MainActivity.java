@@ -1,6 +1,8 @@
 package com.jocabujat.itunestopappsandsongs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,14 +14,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private String feedUrl = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerView);
         DownloadData downloadData = new DownloadData();
         downloadData.execute(feedUrl);
     }
@@ -32,11 +37,14 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             ParseApplication parseApplication = new ParseApplication();
             parseApplication.parse(s);
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(parseApplication.getApplications());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            Log.d(TAG, "doInBackground: URL path is \"" + strings[0] + "\"");
+            Log.d(TAG, "doInBackground: Strings starts with " + strings[0]);
             String rssFeed = downloadXML(strings[0]);
             if (rssFeed == null) {
                 Log.e(TAG, "doInBackground: Error downloading data");
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 URL url = new URL(urlPath);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 int response = connection.getResponseCode();
+                Log.d(TAG, "downloadXML: response code = " + response);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
                 int charsRead = 0;
@@ -71,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage());
             } catch (IOException e) {
                 Log.e(TAG, "downloadXML: IO Exception reading data " + e.getMessage());
+                e.printStackTrace();
             } catch (SecurityException e) {
                 Log.e(TAG, "downloadXML: Security exception " + e.getMessage());
             }

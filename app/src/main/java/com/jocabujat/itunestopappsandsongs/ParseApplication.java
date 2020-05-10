@@ -37,7 +37,7 @@ public class ParseApplication {
                 String tagName = xpp.getName();
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
-                        if(tagName.equalsIgnoreCase("entry")){
+                        if (tagName.equalsIgnoreCase("entry")) {
                             inEntry = true;
                             currentRecord = new FeedEntry();
                         }
@@ -46,7 +46,7 @@ public class ParseApplication {
                         textValue = xpp.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        if(inEntry) {
+                        if (inEntry) {
                             if (tagName.equalsIgnoreCase("entry")) {
                                 applications.add(currentRecord);
                                 inEntry = false;
@@ -74,6 +74,7 @@ public class ParseApplication {
             }
         } catch (Exception e) {
             status = false;
+            Log.d(TAG, "parse: error in parsing " + e.getMessage());
             e.printStackTrace();
         }
 
