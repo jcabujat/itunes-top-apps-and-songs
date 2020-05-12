@@ -27,7 +27,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.name.setText(this.appList.get(position).getName());
+        String title = (position + 1) + ". " + this.appList.get(position).getName();
+        holder.name.setText(title);
         holder.artist.setText(this.appList.get(position).getArtist());
         holder.summary.setText(this.appList.get(position).getSummary());
     }

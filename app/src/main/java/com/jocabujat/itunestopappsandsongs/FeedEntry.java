@@ -49,10 +49,10 @@ public class FeedEntry {
         this.imageUrl = imageUrl;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "Name = " + name + " , Artist = " + artist +
-                "\n Summary : " + summary;
-    }
+//    @NonNull
+//    @Override
+//    public String toString() {
+//        return "Name = " + name + " , Artist = " + artist +
+//                "\n Summary : " + summary;
+//    }
 }
