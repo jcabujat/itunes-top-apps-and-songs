@@ -68,10 +68,10 @@ public class ParseApplication {
                 }
                 eventType = xpp.next();
             }
-            for (FeedEntry app : applications) {
-                Log.d(TAG, "******************");
-                Log.d(TAG, app.toString());
-            }
+//            for (FeedEntry app : applications) {
+//                Log.d(TAG, "******************");
+//                Log.d(TAG, app.toString());
+//            }
         } catch (Exception e) {
             status = false;
             Log.d(TAG, "parse: error in parsing " + e.getMessage());
